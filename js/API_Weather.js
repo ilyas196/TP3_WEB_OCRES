@@ -10,10 +10,14 @@ const API_URL_ICON = "http://openweathermap.org/img/wn/";
 
 class API_WEATHER{
   constructor(city){
+    
+    city = document.getElementById("city-input").value;
+    
     // Si la ville n'est pas définit alors la ville par défault est Paris
-    if(city === undefined){
+    if(city===""){
       city = "paris";
     }
+
     this.city = city;
   }
 
@@ -25,6 +29,13 @@ class API_WEATHER{
       crossdomain: true
     })
   }
+  getThreeDayForecast(){
+    return axios
+    .get(`https://api.openweathermap.org/data/2.5/forecast/daily?q=${this.city}&cnt=4&units=metric&appid=${API_KEY}`, {
+      crossdomain: true
+    })
+  }
+
   // Retourne l'element HTML de l'icon symbolisant la méteo.
   getHTMLElementFromIcon(icon){
     return `<img src=${API_URL_ICON}${icon}@2x.png class="weather-icon"/>`
